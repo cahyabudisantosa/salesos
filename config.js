@@ -6,7 +6,7 @@
 const CONFIG = {
   // ── Google Apps Script Web App URL ──
   // Setelah deploy Apps Script, paste URL-nya di sini
-  API_URL: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbxJtmKguedOOku5duHk0xjaLkhNwNFnceEQaONZ_sPZ7ozPmPZm21aLnOQYRiGAfgXSgg/exec',
 
   // ── Firebase Config ──
   // Dari Firebase Console → Project Settings → Your Apps
