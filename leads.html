@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Leads — Sales OS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-container"></div>
+  <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99"></div>
+  <main class="main-content">
+    <div id="header-container"></div>
+    <div style="padding:14px 24px;border-bottom:1px solid var(--border);background:var(--navy-2);position:sticky;top:57px;z-index:40">
+      <div class="flex gap-2 mb-3">
+        <div class="search-wrap" style="flex:1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" class="form-control" id="search-input" placeholder="Cari nama, nomor, area..." autocomplete="off">
+        </div>
+        <select class="form-control" id="area-filter" style="width:auto;min-width:120px">
+          <option value="">Semua Area</option>
+        </select>
+        <select class="form-control" id="sales-filter" style="width:auto;min-width:120px;display:none">
+          <option value="">Semua Sales</option>
+        </select>
+      </div>
+      <div class="filter-bar" id="status-filter">
+        <button class="filter-chip active" data-status="">Semua</button>
+        ${CONFIG_STAGES_PLACEHOLDER}
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm text-muted" id="lead-count">Memuat...</span>
+        <div class="flex gap-2">
+          <button class="btn-icon" id="view-grid" title="Grid View"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></button>
+          <button class="btn-icon" id="view-list" title="List View"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
+        </div>
+      </div>
+      <div id="leads-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px"></div>
+      <div id="load-more-wrap" style="display:none;text-align:center;margin-top:20px">
+        <button class="btn btn-ghost" id="load-more-btn">Muat Lebih Banyak</button>
+      </div>
+      <div id="empty-state" class="empty-state" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <h3>Belum ada lead</h3>
+        <p>Tambah lead pertama Anda dengan tombol di bawah</p>
+      </div>
+    </div>
+  </main>
+</div>
+<button class="fab" onclick="LeadModal.openCreate()" title="Tambah Lead">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+<div id="bottom-nav-container"></div>
+
+<script src="config.js"></script>
+<script src="utils.js"></script>
+<script src="auth.js"></script>
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script src="leads.js"></script>
+</body>
+</html>

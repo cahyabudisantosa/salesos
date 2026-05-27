@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Login — Sales OS</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#0B1426">
+</head>
+<body>
+<div class="login-page">
+  <div class="login-bg"></div>
+  <div style="position:absolute;top:10%;right:10%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,0.08),transparent);pointer-events:none"></div>
+  <div style="position:absolute;bottom:15%;left:5%;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent);pointer-events:none"></div>
+
+  <div class="login-card fade-in">
+    <div class="login-logo">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px">
+        <div class="logo-icon" style="width:48px;height:48px;font-size:18px;border-radius:14px">SO</div>
+        <div style="text-align:left">
+          <div class="login-title">Sales OS</div>
+          <div class="login-sub">ISP Sales Management System</div>
+        </div>
+      </div>
+      <div style="height:1px;background:var(--border);margin-top:16px"></div>
+    </div>
+
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" placeholder="email@perusahaan.com" required autocomplete="email" value="owner@demo.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div style="position:relative">
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password" value="demo123">
+          <button type="button" onclick="togglePassword()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="login-error" style="display:none;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:var(--radius);padding:10px 14px;font-size:13px;color:#F87171;margin-bottom:14px"></div>
+      <button type="submit" class="btn btn-primary btn-lg w-full" id="login-btn" style="justify-content:center">
+        <span id="login-btn-text">Masuk</span>
+        <div class="spinner" id="login-spinner" style="display:none;width:16px;height:16px"></div>
+      </button>
+    </form>
+
+    <div style="margin-top:20px;padding:14px;background:var(--navy-3);border-radius:var(--radius);border:1px solid var(--border)">
+      <p style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Demo Accounts</p>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div onclick="fillDemo('owner@demo.com','demo123')" style="cursor:pointer;padding:6px 10px;border-radius:8px;background:var(--navy-4);font-size:12px;display:flex;justify-content:space-between;align-items:center">
+          <span>🏢 owner@demo.com</span>
+          <span style="font-size:10px;color:var(--green)">Owner</span>
+        </div>
+        <div onclick="fillDemo('sales@demo.com','demo123')" style="cursor:pointer;padding:6px 10px;border-radius:8px;background:var(--navy-4);font-size:12px;display:flex;justify-content:space-between;align-items:center">
+          <span>👤 sales@demo.com</span>
+          <span style="font-size:10px;color:var(--blue-light)">Sales</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="utils.js"></script>
+<script src="auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    await Auth.init();
+    if (Auth.isLoggedIn()) window.location.href = 'dashboard.html';
+  });
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('login-btn');
+    const btnText = document.getElementById('login-btn-text');
+    const spinner = document.getElementById('login-spinner');
+    const errorEl = document.getElementById('login-error');
+
+    btn.disabled = true;
+    btnText.textContent = 'Masuk...';
+    spinner.style.display = 'block';
+    errorEl.style.display = 'none';
+
+    const result = await Auth.login(email, password);
+    if (result.success) {
+      btnText.textContent = '✓ Berhasil!';
+      setTimeout(() => window.location.href = 'dashboard.html', 500);
+    } else {
+      errorEl.textContent = result.message || 'Login gagal';
+      errorEl.style.display = 'block';
+      btn.disabled = false;
+      btnText.textContent = 'Masuk';
+      spinner.style.display = 'none';
+    }
+  }
+
+  function fillDemo(email, pw) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = pw;
+  }
+
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+</script>
+</body>
+</html>
