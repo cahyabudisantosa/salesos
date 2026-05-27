@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Dashboard — Sales OS</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#0B1426">
+</head>
+<body>
+<div class="app-layout">
+  <div id="sidebar-container"></div>
+  <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99" onclick="Sidebar.attachToggle()"></div>
+  <main class="main-content">
+    <div id="header-container"></div>
+    <div class="page-body" id="page-body">
+      <div id="loading-state">
+        <div class="kpi-grid mb-4">
+          ${Array(4).fill(`<div class="kpi-card"><div class="skeleton" style="height:40px;width:40px;border-radius:10px;margin-bottom:12px"></div><div class="skeleton" style="height:28px;width:70%;border-radius:4px;margin-bottom:6px"></div><div class="skeleton" style="height:12px;width:50%;border-radius:4px"></div></div>`).join('')}
+        </div>
+      </div>
+      <div id="dashboard-content" style="display:none"></div>
+    </div>
+  </main>
+</div>
+<div id="bottom-nav-container"></div>
+
+<script src="config.js"></script>
+<script src="utils.js"></script>
+<script src="auth.js"></script>
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
